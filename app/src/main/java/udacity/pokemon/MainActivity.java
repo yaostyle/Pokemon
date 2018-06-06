@@ -60,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
             String url = "https://raw.githubusercontent.com/Biuni/PokemonGO-Pokedex/master/pokedex.json";
 
-
             String jsonString = "";
             try {
                 // TODO: make a request to the URL
+                jsonString = sh.makeHttpRequest(createUrl(url));
 
             } catch (IOException e) {
                 return null;
@@ -73,14 +73,18 @@ public class MainActivity extends AppCompatActivity {
             if (jsonString != null) {
                 try {
                     //TODO: Create a new JSONObject
+                    JSONObject jsonObj = new JSONObject(jsonString);
 
                     // TODO: Get the JSON Array node and name it "pokemons"
-
+                    JSONArray pokemons = jsonObj.getJSONArray("pokemon");
 
                     // looping through all Contacts
                     for (int i = 0; i < pokemons.length(); i++) {
                         //TODO: get the JSONObject and its three attributes
-
+                        JSONObject c = pokemons.getJSONObject(i);
+                        String name = c.getString("name");
+                        String id = c.getString("id");
+                        String candy = c.getString("candy");
 
                         // tmp hash map for a single pokemon
                         HashMap<String, String> pokemon = new HashMap<>();
